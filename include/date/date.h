@@ -4420,7 +4420,7 @@ struct fields
     time_of_day<Duration> tod{};
     bool                  has_tod = false;
 
-    fields() = default;
+    fields() {};//= default;
 
     fields(year_month_day ymd_) : ymd(ymd_) {}
     fields(weekday wd_) : wd(wd_) {}

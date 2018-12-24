@@ -7,13 +7,14 @@ include( GNUInstallDirs )
 find_package( Threads REQUIRED )
 
 # Override by setting on CMake command line.
-set( CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard whose features are requested.")
+set( CMAKE_CXX_STANDARD 11 CACHE STRING "The C++ standard whose features are requested.")
 
 option( USE_SYSTEM_TZ_DB "Use the operating system's timezone database" OFF )
 option( USE_TZ_DB_IN_DOT "Save the timezone database in the current folder" OFF )
 option( BUILD_SHARED_LIBS  "Build a shared version of library" OFF )
 option( ENABLE_DATE_TESTING "Enable unit tests" ON )
 option( DISABLE_STRING_VIEW "Disable string view" OFF )
+option( ONLY_C_LOCALE "Only C locale" OFF)
 
 function( print_option OPT )
 	if ( NOT DEFINED PRINT_OPTION_CURR_${OPT} OR ( NOT PRINT_OPTION_CURR_${OPT} STREQUAL ${OPT} ) )
@@ -69,6 +70,10 @@ endif( )
 
 if( DISABLE_STRING_VIEW )
     target_compile_definitions( tz PRIVATE -DHAS_STRING_VIEW=0 )
+endif( )
+
+if( ONLY_C_LOCALE)
+target_compile_definitions( tz PUBLIC -DONLY_C_LOCALE=1 )
 endif( )
 
 if( BUILD_SHARED_LIBS )
